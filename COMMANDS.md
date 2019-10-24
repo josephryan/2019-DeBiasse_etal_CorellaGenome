@@ -1,10 +1,6 @@
 # Commands used in the analyses for the _Corella inflata_ genome project
 ### DeBiasse MB, Colgan W, Harris L, Davidson B, Ryan JF
 
-### NEED TO ADD:
-### ```remove_numbers_before_fasta2phylomatrix.pl```
-### ```rename_augustus.pl```
-
 1. Install remove_numbers_before_fasta2phylomatrix.pl and rename_augustus.pl from the scripts directory in this repo:
 
 ```
