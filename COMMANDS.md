@@ -294,7 +294,7 @@ iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox6.constr -pre hox6.constr
 iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g tunicate_bflor_posterior.constr  
 ```
 
-``
+```
 cat hox.unconstr.treefile hox4.constr.treefile hox5.constr.treefile hox6.constr.treefile hox10.constr.treefile hox12.constr.treefile hox13.constr.treefile hox10_bflor_10-12.constr.treefile tunicate_bflor_posterior.constr.treefile > all_trees   
 ``` 
 
