@@ -49,9 +49,11 @@ java -jar trimmomatic-0.36.jar PE -threads 12 -phred33 Core_infl_Illumina_DNA_PE
 ```
 ### Correct Illumina DNA read sequencing errors  
 Trim reads using Trimmomatic as implemented through Galaxy (https://usegalaxy.org/) with the following settlings:  
-`sliding window = 4`  
-`average phred quality = 27`  
-`IlluminaClip TruSeq3`  
+```
+sliding window = 4  
+average phred quality = 27 
+IlluminaClip TruSeq3  
+```  
 
 ### Genome assembly with Illumina DNA reads
 ```
