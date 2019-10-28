@@ -26,7 +26,7 @@ make install
 
 9. Install rsemgetbestseqs.py from Warren Francis’ BitBucket page: https://bitbucket.org/wrf/sequences/src
 
-10.Create a directory named ```01-FILES``` on your local machine. Download the following and place them in ```01-FILES```
+10. Create a directory named ```01-FILES``` on your local machine. Download the following and place them in ```01-FILES```
 
 _Available from_ https://github.com/josephryan/2019-DeBiasse_etal_CorellaGenome
 ```meraculous_config_file```
