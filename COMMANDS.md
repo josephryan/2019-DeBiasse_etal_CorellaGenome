@@ -80,18 +80,14 @@ perl SSPACE-STANDARD-3.0_linux-x86_64/SSPACE_Standard_v3.0.pl -l libraries.txt -
 ```
 ### Sort genome, remove scaffolds less than 200bp, rename deflines
 ```
-remove_short_and_sort Core_infl.final.scaffolds.fasta 200 > Core_infl_genome_sorted_no_short.fa
-```
-```
-replace_deflines.pl --pad=5 --fasta=Core_infl_genome_sorted_no_short.fa --prefix=Cinf4 > Core_infl_genome_v2.fa
+remove_short_and_sort Core_infl.final.scaffolds.fasta 200 > Core_infl_genome_sorted_no_short.fa  
+replace_deflines.pl --pad=5 --fasta=Core_infl_genome_sorted_no_short.fa --prefix=Cinf4 > Core_infl_genome_v2.fa  
 ```
 
-#### Quality control for Illumina RNAseq reads
+### Quality control for Illumina RNAseq reads
 ```
-cat 01-FILES/FGC1291_s_4_1_CTTGTA.fastq 01-FILES/FGC1291_s_4_1_GCCAAT.fastq > core_R1.fq
-```
-```
-cat 01-FILES/FGC1291_s_4_2_CTTGTA.fastq 01-FILES/FGC1291_s_4_2_GCCAAT.fastq > core_R2.fq
+cat 01-FILES/FGC1291_s_4_1_CTTGTA.fastq 01-FILES/FGC1291_s_4_1_GCCAAT.fastq > core_R1.fq  
+cat 01-FILES/FGC1291_s_4_2_CTTGTA.fastq 01-FILES/FGC1291_s_4_2_GCCAAT.fastq > core_R2.fq  
 ```
 ```
 bl-filter-illumina -a -i core_R1.fq -i core_R2.fq -o core_R1_bfl.fq -o core_R2_bfl.fq -u core_unp_bfl.fq
@@ -165,27 +161,31 @@ fasta2phylomatrix --dir=01-NO_NUMBERS --raxpartition=tunicate_210.rax --nexparti
 iqtree-omp -s tunicate_210.fa -pre tunicate_210 -spp tunicate_210.nex -nt AUTO -m TEST -bb 1000
 ```
 ### Bayesian species tree estimation
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain2`   
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain2`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain2`  
-`readpb -x 100 10 random_6_chain1.err`
+```
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain1  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain2  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain2  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain2   
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain2   
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain2   
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain2  
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain2    
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain2   
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain2   
+mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain2     
+```
+```
+readpb -x 100 10 random_6_chain1.err  
+```
 ### ML vs Bayesian topology test
 ```
 iqtree-omp -s tunicate_210.fa -m TEST -g ml_topo.tre -pre ml_topo_constraint -spp tunicate_210.nex -nt AUTO
@@ -254,10 +254,13 @@ augustus --species=ciona --extrinsicCfgFile=extrinsic.M.RM.E.W.cfg --alternative
 ```
 perl /augustus-3.3/scripts/getAnnoFasta.pl Core_infl_genome_augustus_2.out --seqfile=Core_infl_genome_v2.fa
 ```
-`rename_augustus.pl --gff=Core_infl_genome_augustus.out --out=Core_infl_gene_models --pre=Core_infl_genome_augustus.out`  
-`mv Core_infl_gene_models.aa Core_infl_gene_models.aa.fa`  
-`mv Core_infl_gene_models.codingseq Core_infl_gene_models.nuc.fa`  
-
+```
+rename_augustus.pl --gff=Core_infl_genome_augustus.out --out=Core_infl_gene_models --pre=Core_infl_genome_augustus.out  
+```  
+```
+mv Core_infl_gene_models.aa Core_infl_gene_models.aa.fa  
+mv Core_infl_gene_models.codingseq Core_infl_gene_models.nuc.fa  
+```
 ### Identify Hox genes
 ```
 cat Corella_inflata_transcriptome_v1_cdhit_97.pep.fa Core_infl_gene_models.aa.fa Cion_inte_trans.pep.fa Cion_inte_gm.pep.fa > cinf_crob_trans_gm.fa
@@ -280,17 +283,22 @@ make_subalignment --tree=CCTGB.treefile --aln=CCTGB.fa --root=Core_infl.116187 -
 iqtree-omp -s CCTGB_subaligned.fa -nt AUTO -bb 1000 -m TEST -pre CCTGB_subaligned
 ```
 ### Hox gene tree AU test
+```
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10_bflor_1:0-12.constr -pre hox10_bflor_10-12.constr  
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10.constr -pre hox10.constr  
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox12.constr -pre hox12.constr  
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox13.constr -pre hox13.constr  
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox4.constr -pre hox4.constr  
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox5.constr -pre hox5.constr  
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox6.constr -pre hox6.constr  
+iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g tunicate_bflor_posterior.constr  
+```
 
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10_bflor_10-12.constr -pre hox10_bflor_10-12.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10.constr -pre hox10.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox12.constr -pre hox12.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox13.constr -pre hox13.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox4.constr -pre hox4.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox5.constr -pre hox5.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox6.constr -pre hox6.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g tunicate_bflor_posterior.constr`  
+``
+cat hox.unconstr.treefile hox4.constr.treefile hox5.constr.treefile hox6.constr.treefile hox10.constr.treefile hox12.constr.treefile hox13.constr.treefile hox10_bflor_10-12.constr.treefile tunicate_bflor_posterior.constr.treefile > all_trees   
+``` 
 
-`cat hox.unconstr.treefile hox4.constr.treefile hox5.constr.treefile hox6.constr.treefile hox10.constr.treefile hox12.constr.treefile hox13.constr.treefile hox10_bflor_10-12.constr.treefile tunicate_bflor_posterior.constr.treefile > all_trees`  
-
-`iqtree -s CCTGB_subaligned.fa -m LG+G4 -z all_trees -pre hox_au_test -nt AUTO -n 0 -zb 1000 -au`
+```
+iqtree -s CCTGB_subaligned.fa -m LG+G4 -z all_trees -pre hox_au_test -nt AUTO -n 0 -zb 1000 -au  
+```
 
