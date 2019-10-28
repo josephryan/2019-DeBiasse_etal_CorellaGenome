@@ -10,7 +10,7 @@ make
 make install
 ```
 
-2. Install JFR::Fasta, fasta2phylomatrix, and replace_deflines.pl available at: https://github.com/josephryan/JFR-PerlModules
+2. Install JFR::Fasta, `fasta2phylomatrix`, and replace_deflines.pl available at: https://github.com/josephryan/JFR-PerlModules
 
 3. Install ortho_diamond and parapruner.pl available at: https://github.com/josephryan/RyanLabPhylogenomicTools
 
