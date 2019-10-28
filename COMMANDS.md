@@ -104,7 +104,7 @@ bl-filter-illumina -a -i core_R1.fq -i core_R2.fq -o core_R1_bfl.fq -o core_R2_b
 cat core_R1_bfl.fq core_unp_bfl.fq > core_R1unp_bfl.fq
 ```
 
-#### Transcriptome assembly from RNAseq reads
+### Transcriptome assembly from RNAseq reads
 ```
 trinityrnaseq-Trinity-v2.4.0/Trinity --seqType fq --max_memory 750G --CPU 12 --left core_R1unp_bfl.fq --right core_R2_bfl.fq --full_cleanup --normalize_reads --normalize_max_read_cov 30
 ```
@@ -118,7 +118,7 @@ rsemgetbestseqs.py RSEM.isoforms.results trinity_out_dir.Trinity.fasta
 mv trinity_out_dir.Trinity.fasta.RSEM.transcripts.fa Corella_inflata_transcriptopme_v1.fa
 ```
 
-#### Collapse transcriptome assembly
+### Collapse transcriptome assembly
 ```
 cd-hit-est -i Corella_inflata_transcriptopme_v1.fa -o Corella_inflata_transcriptome_v1_cdhit_97.fa -c 0.97 -T 80 -M 3100
 ```
