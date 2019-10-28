@@ -159,7 +159,7 @@ perl parapruner.pl
 
 ### Generate concatenated matrix
 ```
-remove_numbers_before_fast2phylomatrix.pl
+remove_numbers_before_fasta2phylomatrix.pl
 ```
 ```
 fasta2phylomatrix --dir=01-NO_NUMBERS --raxpartition=tunicate_210.rax --nexpartition=tunicate_210.nex > tunicate_210.fa
