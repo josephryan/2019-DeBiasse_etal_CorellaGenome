@@ -27,7 +27,7 @@
 
 10\. Create a directory named ```01-FILES``` on your local machine. Download the following and place them in ```01-FILES```
 
-_Available from: https://github.com/josephryan/2019-DeBiasse\_etal\_CorellaGenome_  
+_Available from: https://github.com/josephryan/2019-DeBiasse_etal_CorellaGenome_  
 ```meraculous_config_file```  
 ```subclade.txt```  
 ```branchiostoma.fa```  
@@ -173,7 +173,7 @@ iqtree-omp -s tunicate_210.fa -pre tunicate_210 -spp tunicate_210.nex -nt AUTO -
 `mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain1`  
 `mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain1`  
 `mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain1`  
-`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain2 ` 
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain2`   
 `mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain2`  
 `mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain2`  
 `mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain2`  
@@ -252,13 +252,10 @@ augustus --species=ciona --extrinsicCfgFile=extrinsic.M.RM.E.W.cfg --alternative
 ```
 perl /augustus-3.3/scripts/getAnnoFasta.pl Core_infl_genome_augustus_2.out --seqfile=Core_infl_genome_v2.fa
 ```
-```
-rename_augustus.pl --gff=Core_infl_genome_augustus.out --out=Core_infl_gene_models --pre=Core_infl_genome_augustus.out
-```
-```
-mv Core_infl_gene_models.aa Core_infl_gene_models.aa.fa
-mv Core_infl_gene_models.codingseq mv Core_infl_gene_models.nuc.fa
-```
+`rename_augustus.pl --gff=Core_infl_genome_augustus.out --out=Core_infl_gene_models --pre=Core_infl_genome_augustus.out`  
+`mv Core_infl_gene_models.aa Core_infl_gene_models.aa.fa`  
+`mv Core_infl_gene_models.codingseq Core_infl_gene_models.nuc.fa`  
+
 ### Identify Hox genes
 ```
 cat Corella_inflata_transcriptome_v1_cdhit_97.pep.fa Core_infl_gene_models.aa.fa Cion_inte_trans.pep.fa Cion_inte_gm.pep.fa > cinf_crob_trans_gm.fa
@@ -289,9 +286,9 @@ iqtree-omp -s CCTGB_subaligned.fa -nt AUTO -bb 1000 -m TEST -pre CCTGB_subaligne
 `iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox4.constr -pre hox4.constr`  
 `iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox5.constr -pre hox5.constr`  
 `iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox6.constr -pre hox6.constr`  
-`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g tunicate_bflor_posterior.constr`
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g tunicate_bflor_posterior.constr`  
 
-`cat hox.unconstr.treefile hox4.constr.treefile hox5.constr.treefile hox6.constr.treefile hox10.constr.treefile hox12.constr.treefile hox13.constr.treefile hox10_bflor_10-12.constr.treefile tunicate_bflor_posterior.constr.treefile > all_trees`
+`cat hox.unconstr.treefile hox4.constr.treefile hox5.constr.treefile hox6.constr.treefile hox10.constr.treefile hox12.constr.treefile hox13.constr.treefile hox10_bflor_10-12.constr.treefile tunicate_bflor_posterior.constr.treefile > all_trees`  
 
 `iqtree -s CCTGB_subaligned.fa -m LG+G4 -z all_trees -pre hox_au_test -nt AUTO -n 0 -zb 1000 -au`
 
