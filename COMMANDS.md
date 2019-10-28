@@ -1,63 +1,58 @@
 # Commands used in the analyses for the _Corella inflata_ genome project
 ### DeBiasse MB, Colgan W, Harris L, Davidson B, Ryan JF
 
-1. Install remove_numbers_before_fasta2phylomatrix.pl and rename_augustus.pl from the scripts directory in this repo:
+1\. Install `remove_numbers_before_fasta2phylomatrix.pl` and `rename_augustus.pl` from the scripts directory in this repo:
 
-```
-cd scripts
-perl Makefile.PL
-make
-make install
-```
+`cd scripts`  
+ `perl Makefile.PL`  
+`make`  
+`make install`
 
-2. Install JFR::Fasta, `fasta2phylomatrix`, and replace_deflines.pl available at: https://github.com/josephryan/JFR-PerlModules
 
-3. Install ortho_diamond and parapruner.pl available at: https://github.com/josephryan/RyanLabPhylogenomicTools
+2\. Install `JFR::Fasta`, `fasta2phylomatrix`, and `replace_deflines.pl` available at: https://github.com/josephryan/JFR-PerlModules
 
-4. Install chet available at: https://github.com/josephryan/chet
+3\. Install `ortho_diamond` and `parapruner.pl` available at: https://github.com/josephryan/RyanLabPhylogenomicTools
 
-5. Install hmm2aln.pl available at: https://github.com/josephryan/hmm2aln.pl
+4\. Install `chet` available at: https://github.com/josephryan/chet
 
-6. Install matemaker available at: https://github.com/josephryan/matemaker
- 
-7. Install make_subalignment available at: https://github.com/josephryan/make_subalignment
+5\. Install `hmm2aln.pl` available at: https://github.com/josephryan/hmm2aln.pl
 
-8. Install remove_short_and_sort available at: https://github.com/josephryan/RyanLabShortReadAssembly
+6\. Install `matemaker` available at: https://github.com/josephryan/matemaker
 
-9. Install rsemgetbestseqs.py from Warren Francis’ BitBucket page: https://bitbucket.org/wrf/sequences/src
+7\. Install `make_subalignment` available at: https://github.com/josephryan/make_subalignment
 
-10. Create a directory named ```01-FILES``` on your local machine. Download the following and place them in ```01-FILES```
+8\. Install `remove_short_and_sort` available at: https://github.com/josephryan/RyanLabShortReadAssembly
 
-_Available from_ https://github.com/josephryan/2019-DeBiasse_etal_CorellaGenome
-```meraculous_config_file```
-```subclade.txt```
-```branchiostoma.fa```
-```Cion_inte_trans.pep.fa```
-```Cion_inte_gm.pep.fa```
+9\. Install `rsemgetbestseqs.py` from Warren Francis’ BitBucket page: https://bitbucket.org/wrf/sequences/src
 
-_Available from the European Nucleotide Archive at accession numbers XXXXX_ 
-```Core_infl_Illumina_DNA_PE_R1.fastq```
-```Core_infl_Illumina_DNA_PE_R2.fastq``` 
-```FGC1291_s_4_1_CTTGTA.fastq```
-```FGC1291_s_4_1_GCCAAT.fastq```
-```FGC1291_s_4_2_CTTGTA.fastq```
-```FGC1291_s_4_2_GCCAAT.fastq``` 
-```core_infl_pacbioreads.fastq``` 
+10\. Create a directory named ```01-FILES``` on your local machine. Download the following and place them in ```01-FILES```
+
+_Available from: https://github.com/josephryan/2019-DeBiasse\_etal\_CorellaGenome_  
+```meraculous_config_file```  
+```subclade.txt```  
+```branchiostoma.fa```  
+```Cion_inte_trans.pep.fa```  
+```Cion_inte_gm.pep.fa```  
+
+_Available from the European Nucleotide Archive at accession numbers (pending)_  
+```Core_infl_Illumina_DNA_PE_R1.fastq```  
+```Core_infl_Illumina_DNA_PE_R2.fastq```  
+```FGC1291_s_4_1_CTTGTA.fastq```  
+```FGC1291_s_4_1_GCCAAT.fastq```  
+```FGC1291_s_4_2_CTTGTA.fastq```  
+```FGC1291_s_4_2_GCCAAT.fastq```  
+```core_infl_pacbioreads.fastq```  
 
 ### Quality control for Illumina DNA reads
 ```
 java -jar trimmomatic-0.36.jar PE -threads 12 -phred33 Core_infl_Illumina_DNA_PE_R1.fastq Core_infl_Illumina_DNA_PE_R2.fastq Core_infl_DNA_R1_trimmed.fq Core_infl_DNA_R1_trimmed_unp.fq Core_infl_DNA_R2_trimmed.fq Core_infl_DNA_R2_trimmed_unp.fq ILLUMINACLIP:/usr/local/Trimmomatic-0.32/adapters/TruSeq3-PE.fa:2:30:12:1:true MINLEN:36
 ```
-### Correct Illumina DNA read sequencing errors
-```
-perl allpathslg-44837/src/ErrorCorrectReads.pl PAIRED_READS_A_IN=Core_infl_DNA_R1_trimmed.fq PAIRED_READS_B_IN=Core_infl_DNA_R1_trimmed.fq PAIRED_SEP=350 THREADS=46 PHRED_ENCODING=33 READS_OUT=Core_infl_DNA_trim_ecr
-```
-```
-perl /allpathslg-44837/src/ErrorCorrectReads.pl UNPAIRED_READS_IN=Core_infl_DNA_R1_trimmed_unp.fq THREADS=46 PHRED_ENCODING=33 READS_OUT=Core_infl_DNA_R1_trimmed_ecr_unp.fq
-```
-```
-perl /allpathslg-44837/src/ErrorCorrectReads.pl UNPAIRED_READS_IN=Core_infl_DNA_R2_trimmed_unp.fq THREADS=46 PHRED_ENCODING=33 READS_OUT=Core_infl_DNA_R2_trimmed_ecr_unp.fq
-```
+### Correct Illumina DNA read sequencing errors  
+Trim reads using Trimmomatic as implemented through Galaxy (https://usegalaxy.org/) with the following settlings:  
+`sliding window = 4`  
+`average phred quality = 27`  
+`IlluminaClip TruSeq3`  
+
 ### Genome assembly with Illumina DNA reads
 ```
 run_meraculous.sh -c meraculous_config_file
@@ -88,7 +83,7 @@ remove_short_and_sort Core_infl.final.scaffolds.fasta 200 > Core_infl_genome_sor
 ```
 replace_deflines.pl --pad=5 --fasta=Core_infl_genome_sorted_no_short.fa --prefix=Cinf4 > Core_infl_genome_v2.fa
 ```
-​
+
 #### Quality control for Illumina RNAseq reads
 ```
 cat 01-FILES/FGC1291_s_4_1_CTTGTA.fastq 01-FILES/FGC1291_s_4_1_GCCAAT.fastq > core_R1.fq
@@ -153,12 +148,12 @@ orthofinder -b 01-FILES/Results/WorkingDirectory -a 46 -M msa -os
 filter_ogs_write_scripts.pl --ogdir=Results/WorkingDirectory/Orthologues/Sequences --name=40sp8dups --min_sp=40 --max_sp_occur=8 --num_scripts=46 --threads=1
 ```
 ```
-perl parapruner.pl 
+perl parapruner.pl
 ```
 
 ### Generate concatenated matrix
 ```
-remove_numbers_before_fast2phylomatrix.pl 
+remove_numbers_before_fast2phylomatrix.pl
 ```
 ```
 fasta2phylomatrix --dir=01-NO_NUMBERS --raxpartition=tunicate_210.rax --nexpartition=tunicate_210.nex > tunicate_210.fa
@@ -168,31 +163,27 @@ fasta2phylomatrix --dir=01-NO_NUMBERS --raxpartition=tunicate_210.rax --nexparti
 iqtree-omp -s tunicate_210.fa -pre tunicate_210 -spp tunicate_210.nex -nt AUTO -m TEST -bb 1000
 ```
 ### Bayesian species tree estimation
-```
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain1
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain2
-mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain2
-```
-```
-readpb -x 100 10 random_6_chain1.err
-```
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain1`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_nj_10.tre nj_10_chain2 ` 
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_1.tre random_1_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_2.tre random_2_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_3.tre random_3_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_4.tre random_4_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_5.tre random_5_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_6.tre random_6_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_7.tre random_7_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_8.tre random_8_chain2`  
+`mpirun -n 8 pb_mpi -d tunicate_210.phy -cat -gtr -t tunicate_210_random_9.tre random_9_chain2`  
+`readpb -x 100 10 random_6_chain1.err`
 ### ML vs Bayesian topology test
 ```
 iqtree-omp -s tunicate_210.fa -m TEST -g ml_topo.tre -pre ml_topo_constraint -spp tunicate_210.nex -nt AUTO
@@ -220,7 +211,7 @@ chet --fasta=50_best_OGs_average_RCFV.fa --clade1=DIST,CDEL --clade2=CWIL,ASCI
 ```
 chet --fasta=50_best_OGs_average_RCFV.fa --clade2=CWIL,ASCI --clade1=CSAV,CROB,CINT
 ```
-### _10. BaCoCa analyses_
+### BaCoCa analyses
 ```
 perl BaCoCa.v1.105.r.pl -i 50_best_OGs_average_RCFV.fa -c subclade.txt -p Kocot_50.partition
 ```
@@ -290,19 +281,17 @@ make_subalignment --tree=CCTGB.treefile --aln=CCTGB.fa --root=Core_infl.116187 -
 iqtree-omp -s CCTGB_subaligned.fa -nt AUTO -bb 1000 -m TEST -pre CCTGB_subaligned
 ```
 ### Hox gene tree AU test
-```
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10_bflor_10-12.constr -pre hox10_bflor_10-12.constr > hox10_bflor_10-12.constr.out 2> hox10_bflor_10-12.constr.err &
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10.constr -pre hox10.constr > hox10.constr.out 2> hox10.constr.err &
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox12.constr -pre hox12.constr > hox12.constr.out 2> hox12.constr.err &
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox13.constr -pre hox13.constr > hox13.constr.out 2> hox13.constr.err &
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox4.constr -pre hox4.constr > hox4.constr.out 2> hox4.constr.err &
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox5.constr -pre hox5.constr > hox5.constr.out 2> hox5.constr.err &
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox6.constr -pre hox6.constr > hox6.constr.out 2> hox6.constr.err &
-iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g tunicate_bflor_posterior.constr -pre tunicate_bflor_posterior.constr > tunicate_bflor_posterior.constr.out 2> tunicate_bflor_posterior.constr.err &
-```
-```
-cat hox.unconstr.treefile hox4.constr.treefile hox5.constr.treefile hox6.constr.treefile hox10.constr.treefile hox12.constr.treefile hox13.constr.treefile hox10_bflor_10-12.constr.treefile tunicate_bflor_posterior.constr.treefile > all_trees
-```
-```
-iqtree -s CCTGB_subaligned.fa -m LG+G4 -z all_trees -pre hox_au_test -nt AUTO -n 0 -zb 1000 -au
-```
+
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10_bflor_10-12.constr -pre hox10_bflor_10-12.constr`  
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox10.constr -pre hox10.constr`  
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox12.constr -pre hox12.constr`  
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox13.constr -pre hox13.constr`  
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox4.constr -pre hox4.constr`  
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox5.constr -pre hox5.constr`  
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g hox6.constr -pre hox6.constr`  
+`iqtree -s CCTGB_subaligned.fa -nt AUTO -m LG+G4 -g tunicate_bflor_posterior.constr`
+
+`cat hox.unconstr.treefile hox4.constr.treefile hox5.constr.treefile hox6.constr.treefile hox10.constr.treefile hox12.constr.treefile hox13.constr.treefile hox10_bflor_10-12.constr.treefile tunicate_bflor_posterior.constr.treefile > all_trees`
+
+`iqtree -s CCTGB_subaligned.fa -m LG+G4 -z all_trees -pre hox_au_test -nt AUTO -n 0 -zb 1000 -au`
+
