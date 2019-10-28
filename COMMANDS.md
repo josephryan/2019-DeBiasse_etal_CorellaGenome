@@ -55,6 +55,14 @@ average phred quality = 27
 IlluminaClip TruSeq3  
 ```  
 
+### Count kmers in trimmed Illumina reads
+```
+jellyfish count -m 18 -t 6 -s 100000000 --both-strands R1_trimmed.fq R2_trimmed.fq
+```
+```
+jellyfish merge -o mer_counts_merged.jf mer_counts_0 mer_counts_1 mer_counts_2  mer_counts_3 mer_counts_4 mer_counts_5 mer_counts_6 mer_counts_7 mer_counts_8 mer_counts_9 mer_counts_10 mer_counts_11 mer_counts_12 mer_counts_13
+```
+
 ### Genome assembly with Illumina DNA reads
 ```
 run_meraculous.sh -c meraculous_config_file
